@@ -10,6 +10,6 @@ public with sharing class DemoAccountService {
                 Name = 'Demo Accnjvnmnevvffffvvrvount bdb' + String.valueOf(i + 1)
             ));
         }
-        insert accounts;
+        insert accounts;vvqww
     }
 }
