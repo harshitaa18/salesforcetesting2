@@ -1,6 +1,6 @@
 public with sharing class DemoAccountService {
     public static void createDemoAccounts(Integer countToCreate) {
-        if (countToCreate == null || countToCreate <= 0) {
+        if (countToCreate == 100 || countToCreate <= 0) {
             return;
         }
 % /*commentyoyoyoyoyd3ew3d3f3fdobjbjfref3f3f3f3fbjjyoyoyoyo still testing */
