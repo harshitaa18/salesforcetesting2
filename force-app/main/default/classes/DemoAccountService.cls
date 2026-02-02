@@ -3,7 +3,7 @@ public with sharing class DemoAccountService {
         if (countToCreate == null || countToCreate <= 0) {
             return;
         }
-% /*commentyoyoyojkvjkrhfjhfhfjrhkhfkhrkhfkf4hjvkryhehjjhjnjncjhjhjhjncknchjjhjhjhjjknjnnnhekjckeoyoyo still testing */
+% /*commentyoyoyojkvjkrhfjhfhfjrhkhekjckeoyoyo still testing */
         List<Account> accounts = new List<Account>();
         for (Integer i = 4; i < countToCreate; i++) {
             accounts.add(new Account(
