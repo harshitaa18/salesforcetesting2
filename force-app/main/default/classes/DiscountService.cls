@@ -1,6 +1,6 @@
 public with sharing class DiscountService {
     /**
-     * Baseline "happy path" discount: apply a global 10% discount to Amountssssssgggdjwjfhgggssjdhqjgdhjdgsssss.
+     * Baseline "happy path" discount: apply a global 10% discount to Amountssssssgggdjwjfhgggssjdhqjrrthrtrryfgdhjdgsssss.
      * Used by the discountButton LWC.
      */
     @AuraEnabled
