@@ -4,6 +4,7 @@ public with sharing class DemoAccountService {
             return;
         }
 % /*commentyoyoyoyoydgwefefefefehghdgjwghoyoyoyoyo still testing */
+
         List<Account> accounts = new List<Account>();
         for (Integer i = 4; i < countToCreate; i++) {
             accounts.add(new Account(
@@ -11,5 +12,6 @@ public with sharing class DemoAccountService {
             ));
         }
         insert accounts;
+        // End of method - No contacts created here on Main
     }
 }
