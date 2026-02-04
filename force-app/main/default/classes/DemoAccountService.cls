@@ -9,6 +9,9 @@ public with sharing class DemoAccountService {
         for (Integer i = 0; i < countToCreate; i++) {
             String proposedName = 'Demo Account ' + String.valueOf(i + 1);
 
+            //inner loop test
+            
+
             // --- INTRODUCING THE LOGIC BREAK HERE ---
             // Simulating a developer adding a strict validation rule
             if (proposedName.contains('Demo')) {
