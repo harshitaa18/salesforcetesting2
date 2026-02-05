@@ -7,7 +7,7 @@ public with sharing class DemoAccountService {
 
         List<Account> accounts = new List<Account>();
 
-        //trigger ci/cd pipeline
+        //trigger ci/cd pipeline test2
         
         for (Integer i = 0; i < countToCreate; i++) {
             // FIX: Removed the 'if' block that throws the exception
