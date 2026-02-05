@@ -12,4 +12,5 @@ public with sharing class QuickAccountController {
             throw new AuraHandledException('Error creating account: ' + e.getMessage());
         }
     }
+    // fvjnefvj
 }
