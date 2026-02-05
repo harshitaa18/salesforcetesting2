@@ -1,16 +1,20 @@
 public with sharing class DemoAccountService {
-    public static void createDemoAccounts(Integer countToCreate) {
-        if (countToCreate == null || countToCreate <= 0) {
-            return;
-        }
+    @AuraEnabled
+    public static void createDemoAccounts(Integer countToCreate) {
+        if (countToCreate == null || countToCreate <= 0) {
+            return;
+        }
 
-        List<Account> accounts = new List<Account>();
-        for (Integer i = 4; i < countToCreate; i++) {
-            accounts.add(new Account(
-                Name = 'Demo Account bdb' + String.valueOf(i + 1)
-            ));
-        }
-        insert accounts;
-        // End of method - No contacts created here on Main
-    }
+        List<Account> accounts = new List<Account>();
+
+        for (Integer i = 0; i < countToCreate; i++) {
+            String proposedName = 'Demo Account ' + String.valueOf(i + 1) + ' - ' + System.now();
+
+            accounts.add(new Account(
+                Name = proposedName,
+                Type = 'Prospect'
+            ));
+        }
+        insert accounts;
+    }
 }
