@@ -47,6 +47,7 @@ export default class QuickAccountWizard extends LightningElement {
                     })
                 );
                 // Clear inputs
+                //yo mic check
                 nameInput.value = '';
                 phoneInput.value = '';
                 ageInput.value = '';
