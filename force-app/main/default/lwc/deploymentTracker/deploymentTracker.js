@@ -8,7 +8,7 @@ export default class DeploymentTracker extends LightningElement {
     handleSmokeTest() {
         this.statusMessage = 'Running smoke test logic...';
         
-        // Call the Apegtccgx mggtethod we updated in Step 1
+        // Call the Apegtccgx mggtethodrfg we updated in Step 1
         createDemoAccounts({ countToCreate: 1 })
             .then(() => {
                 this.statusMessage = 'Smoke Test Passed: Account Created!';
