@@ -5,14 +5,13 @@ export default class QuickAccountWizard extends LightningElement {
     @track successMessage = '';
     @track errorMessage = '';
 
-    // Form Data
-    @track formData = {
+    formData = {
         name: '',
         accNumber: '',
         phone: '',
         website: '',
         industry: '',
-        revenue: null,
+        revenue: '', // Changed to string to accept input
         employees: null,
         city: ''
     };
@@ -24,20 +23,6 @@ export default class QuickAccountWizard extends LightningElement {
             { label: 'Healthcare', value: 'Healthcare' },
             { label: 'Retail', value: 'Retail' }
         ];
-    }
-
-    // --- NEW LOGIC: Button State ---
-    get isSaveDisabled() {
-        // 1. Name is mandatory
-        if (!this.formData.name) return true;
-
-        // 2. Revenue must be >= 10,000,000
-        // If revenue is missing OR less than 10M, disable button
-        // if (!this.formData.revenue || this.formData.revenue < 10000000) {
-        //     return true;
-        // }
-
-        return false;
     }
 
     handleInputChange(event) {
@@ -57,17 +42,6 @@ export default class QuickAccountWizard extends LightningElement {
         
         if (key) {
             this.formData[key] = event.target.value;
-            
-            //Optional: Show immediate error on the field for better screenshot
-            // if (fieldId === 'accRevenue') {
-            //     const inputCmp = this.template.querySelector('[data-id="accRevenue"]');
-            //     if (this.formData.revenue < 10000000) {
-            //         inputCmp.setCustomValidity("Revenue must be $10M+ for Enterprise Accounts.");
-            //     } else {
-            //         inputCmp.setCustomValidity("");
-            //     }
-            //     inputCmp.reportValidity();
-            // }
         }
     }
 
@@ -75,8 +49,25 @@ export default class QuickAccountWizard extends LightningElement {
         this.successMessage = '';
         this.errorMessage = '';
 
-        // Double check (redundant but safe)
-        if (this.isSaveDisabled) return;
+        const nameInput = this.template.querySelector('[data-id="accName"]');
+        if (!this.formData.name) {
+            nameInput.setCustomValidity("Account Name is required.");
+            nameInput.reportValidity();
+            return;
+        } else {
+            nameInput.setCustomValidity("");
+            nameInput.reportValidity();
+        }
+
+        // --- DATA CLEANING ---
+        // Convert "$5,000,000" -> "5000000"
+        let cleanRevenue = 0;
+        if (this.formData.revenue) {
+            // Remove everything that is NOT a digit or a dot
+            const stringVal = String(this.formData.revenue).replace(/[^0-9.]/g, '');
+            cleanRevenue = parseFloat(stringVal);
+        }
+        // ---------------------
 
         createAccount({ 
             name: this.formData.name,
@@ -84,7 +75,7 @@ export default class QuickAccountWizard extends LightningElement {
             phone: this.formData.phone,
             website: this.formData.website,
             industry: this.formData.industry,
-            revenue: this.formData.revenue,
+            revenue: cleanRevenue, // Send clean number
             employees: this.formData.employees,
             city: this.formData.city
         })
