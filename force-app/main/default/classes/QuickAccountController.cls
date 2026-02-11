@@ -30,7 +30,7 @@ public with sharing class QuickAccountController {
         String marketCap,
         Integer locations,
         String fiscalYear,
-        String currency,
+        String accountCurrency,
         String stockExchange,
         String dunsNumber,
         String naicsCode,
@@ -87,8 +87,8 @@ public with sharing class QuickAccountController {
             if (String.isNotBlank(fiscalYear)) {
                 fullDescription += '\nFiscal Year: ' + fiscalYear;
             }
-            if (String.isNotBlank(currency)) {
-                fullDescription += '\nCurrency: ' + currency;
+            if (String.isNotBlank(accountCurrency)) {
+                fullDescription += '\nCurrency: ' + accountCurrency;
             }
             if (String.isNotBlank(stockExchange)) {
                 fullDescription += '\nStock Exchange: ' + stockExchange;
