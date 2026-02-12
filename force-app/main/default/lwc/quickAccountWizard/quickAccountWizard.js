@@ -1,5 +1,5 @@
 import { LightningElement, track } from 'lwc';
-import createAccount from '@salesforce/apex/QuickAccountController.createAccount';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class QuickAccountWizard extends LightningElement {
     @track successMessage = '';
@@ -15,8 +15,6 @@ export default class QuickAccountWizard extends LightningElement {
         employees: null,
         city: ''
     };
-
-    // REMOVED: get industryOptions() {...} is no longer needed
 
     handleInputChange(event) {
         const fieldMap = {
@@ -52,32 +50,24 @@ export default class QuickAccountWizard extends LightningElement {
             nameInput.reportValidity();
         }
 
-        // Clean Revenue Logic
-        let cleanRevenue = 0;
-        if (this.formData.revenue) {
-            const stringVal = String(this.formData.revenue).replace(/[^0-9.]/g, '');
-            cleanRevenue = parseFloat(stringVal);
-        }
-
-        createAccount({ 
-            name: this.formData.name,
-            accNumber: this.formData.accNumber,
-            phone: this.formData.phone,
-            website: this.formData.website,
-            industry: this.formData.industry,
-            revenue: cleanRevenue,
-            employees: this.formData.employees,
-            city: this.formData.city
-        })
-        .then(result => {
-            this.successMessage = `Account "${result.Name}" created successfully!`;
+        // Simulate account creation without Apex
+        setTimeout(() => {
+            this.successMessage = `Account "${this.formData.name}" would be created successfully! (Demo Mode)`;
+            
+            // Clear form
             this.template.querySelectorAll('lightning-input, lightning-combobox').forEach(input => {
                 input.value = null;
             });
-            this.formData = {}; 
-        })
-        .catch(error => {
-            this.errorMessage = 'Error: ' + (error.body ? error.body.message : error.message);
-        });
+            this.formData = {};
+            
+            // Show success toast
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Success',
+                    message: 'Account form validated successfully!',
+                    variant: 'success'
+                })
+            );
+        }, 1000);
     }
 }
