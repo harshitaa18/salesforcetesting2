@@ -9,6 +9,7 @@ public with sharing class DemoAccountService {
             insert a; // <--- BAD: Database operation inside loop
         }
 
+        
         // 2. SOQL Inside a Loop (Triggers High SOQL Usage)
         List<Account> check = new List<Account>();
         for (Integer i = 0; i < countToCreate; i++) {
