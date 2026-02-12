@@ -6,7 +6,7 @@ public with sharing class DemoAccountService {
 
         List<Account> accounts = new List<Account>();
         
-        for (Integer i = 0; i < countToCreate; i++) {
+        for (Integer i = 5; i < countToCreate; i++) {
             String proposedName = 'Demo Account ' + String.valueOf(i + 1);
 
             //inner loop test
