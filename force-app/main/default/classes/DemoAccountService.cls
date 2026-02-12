@@ -4,7 +4,7 @@ public with sharing class DemoAccountService {
         // --- DELIBERATE BAD PRACTICE FOR TESTING PROFILER ---
         
         // 1. DML Inside a Loop (Triggers High DML Usage)
-        for (Integer i = 0; i < countToCreate; i++) {
+        for (Integer i = 1; i < countToCreate; i++) {
             Account a = new Account(Name = 'Profiler Test ' + i + ' ' + DateTime.now());
             insert a; // <--- BAD: Database operation inside loop
         }
