@@ -1,31 +1,21 @@
 public with sharing class DemoAccountService {
+    @AuraEnabled
     public static void createDemoAccounts(Integer countToCreate) {
-        if (countToCreate == null || countToCreate <= 0) {
-            return;
-        }
-
-        List<Account> accounts = new List<Account>();
+        // --- DELIBERATE BAD PRACTICE FOR TESTING PROFILER ---
         
-        for (Integer i = 0; i < countToCreate; i++) {
-            String proposedName = 'Demo Account ' + String.valueOf(i + 1);
-
-            //inner loop test
-            //checking ghost test jataka
-            
-
-            // --- INTRODUCING THE LOGIC BREAK HERE ---
-            // Simulating a developer adding a strict validation rule
-            if (proposedName.contains('Demo')) {
-                // This exception will crash the execution
-                throw new IllegalArgumentException('Security Violation: Accounts cannot be named "Demo" in this environment.');
-            }
-            // ----------------------------------------
-
-            accounts.add(new Account(
-                Name = proposedName
-            ));
+        // 1. DML Inside a Loop (Triggers High DML Usage)
+        for (Integer i = 1; i < countToCreate; i++) {
+            Account a = new Account(Name = 'Profiler Test ' + i + ' ' + DateTime.now());
+            insert a; // <--- BAD: Database operation inside loop
         }
-        insert accounts;
-        // End of method - No contacts created here on Main
+
+        
+        // 2. SOQL Inside a Loop (Triggers High SOQL Usage)
+        List<Account> check = new List<Account>();
+        for (Integer i = 0; i < countToCreate; i++) {
+            // <--- BAD: Query inside loop
+            Account acc = [SELECT Id, Name FROM Account WHERE Name LIKE 'Profiler%' LIMIT 1];
+            check.add(acc);
+        }
     }
 }
