@@ -1,45 +1,73 @@
 import { LightningElement, track } from 'lwc';
-import createAccount from '@salesforce/apex/QuickAccountController.createAccount';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class QuickAccountWizard extends LightningElement {
-    @track message = '';
+    @track successMessage = '';
+    @track errorMessage = '';
+
+    formData = {
+        name: '',
+        accNumber: '',
+        phone: '',
+        website: '',
+        industry: '',
+        revenue: '', 
+        employees: null,
+        city: ''
+    };
+
+    handleInputChange(event) {
+        const fieldMap = {
+            'accName': 'name',
+            'accNumber': 'accNumber',
+            'accPhone': 'phone',
+            'accWebsite': 'website',
+            'accIndustry': 'industry',
+            'accRevenue': 'revenue',
+            'accEmployees': 'employees',
+            'accCity': 'city'
+        };
+
+        const fieldId = event.target.dataset.id;
+        const key = fieldMap[fieldId];
+        
+        if (key) {
+            this.formData[key] = event.target.value;
+        }
+    }
 
     handleCreate() {
-        const nameInput = this.template.querySelector('[data-id="accName"]');
-        const phoneInput = this.template.querySelector('[data-id="accPhone"]');
-        
-        const name = nameInput.value;
-        const phone = phoneInput.value;
+        this.successMessage = '';
+        this.errorMessage = '';
 
-        if (!name) {
+        const nameInput = this.template.querySelector('[data-id="accName"]');
+        if (!this.formData.name) {
+            nameInput.setCustomValidity("Account Name is required.");
             nameInput.reportValidity();
             return;
+        } else {
+            nameInput.setCustomValidity("");
+            nameInput.reportValidity();
         }
 
-        createAccount({ name: name, phone: phone })
-            .then(result => {
-                this.message = `Success! Created account: ${result.Name}`;
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Success',
-                        message: 'Account created successfully!',
-                        variant: 'success'
-                    })
-                );
-                // Clear inputs
-                nameInput.value = '';
-                phoneInput.value = '';
-            })
-            .catch(error => {
-                this.message = 'Error creating account';
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Error',
-                        message: error.body.message,
-                        variant: 'error'
-                    })
-                );
+        // Simulate account creation without Apex
+        setTimeout(() => {
+            this.successMessage = `Account "${this.formData.name}" would be created successfully! (Demo Mode)`;
+            
+            // Clear form
+            this.template.querySelectorAll('lightning-input, lightning-combobox').forEach(input => {
+                input.value = null;
             });
+            this.formData = {};
+            
+            // Show success toast
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Success',
+                    message: 'Account form validated successfully!',
+                    variant: 'success'
+                })
+            );
+        }, 1000);
     }
 }
