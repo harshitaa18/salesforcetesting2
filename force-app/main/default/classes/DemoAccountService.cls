@@ -11,7 +11,6 @@ public with sharing class DemoAccountService {
 
             //inner loop test
             //checking ghost test jataka
-            //hello
 
             // --- INTRODUCING THE LOGIC BREAK HERE ---
             // Simulating a developer adding a strict validation rule
