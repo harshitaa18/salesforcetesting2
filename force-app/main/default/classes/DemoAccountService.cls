@@ -6,10 +6,10 @@ public with sharing class DemoAccountService {
 
         List<Account> accounts = new List<Account>();
         
-        for (Integer i = 50; i < countToCreate; i++) {
+        for (Integer i = 10; i < countToCreate; i++) {
             String proposedName = 'Demo Account ' + String.valueOf(i + 1);
 
-            
+
             //inner loop test
             //checking ghost test jataka
             
