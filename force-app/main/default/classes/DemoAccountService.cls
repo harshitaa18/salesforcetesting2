@@ -9,10 +9,8 @@ public with sharing class DemoAccountService {
         for (Integer i = 10; i < countToCreate; i++) {
             String proposedName = 'Demo Account ' + String.valueOf(i + 1);
 
-
-            
             //inner loop test
-            //checking ghost test jataka
+            //checking ghost test jatakaa
             
 
             // --- INTRODUCING THE LOGIC BREAK HERE ---
