@@ -1,6 +1,6 @@
 public with sharing class QuickAccountController {
 
-    // --- PHASE 4 STEP 1: The Outbound Mock ---
+    // --- PHASE 4 STEP 1: The Outbouounnnd Mock ---
     @AuraEnabled
     public static String fetchErpData(String accountName) {
         HttpRequest req = new HttpRequest();
