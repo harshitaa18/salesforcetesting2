@@ -1,6 +1,11 @@
 <template>
-    <lightning-card title="✨ Quick Account Wizard" icon-name="standard:account">
+    <lightning-card title="✨ Quick Account Wizard (Enterprise)" icon-name="standard:account">
         <div class="slds-p-around_medium">
+            <!-- Spinner for Phase 4 Async Wait Test -->
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Syncing to ERP..." size="medium"></lightning-spinner>
+            </template>
+
             <div class="slds-m-bottom_small">
                 <lightning-input label="Account Name" data-id="accName" required></lightning-input>
             </div>
@@ -8,9 +13,22 @@
                 <lightning-input type="tel" label="Phone Number" data-id="accPhone"></lightning-input>
             </div>
             
+            <!-- NEW: Read-only field populated by External System -->
+            <div class="slds-m-bottom_small">
+                <lightning-input label="ERP Tax ID" data-id="erpId" readonly value={erpId} 
+                    placeholder="Click 'Sync' to fetch from ERP"></lightning-input>
+            </div>
+            
             <div class="slds-align_absolute-center slds-m-top_medium">
-                <!-- This is the button Kamikazeee will interact with -->
-                <!--testing in processssss-->
+                <!-- Phase 4 Action: This triggers the outbound API call -->
+                <lightning-button 
+                    variant="neutral" 
+                    label="Sync with ERP" 
+                    title="Fetch Tax ID from ERP" 
+                    onclick={handleSync}
+                    class="slds-m-right_small">
+                </lightning-button>
+
                 <lightning-button 
                     variant="brand" 
                     label="Create Account" 
