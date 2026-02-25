@@ -14,7 +14,6 @@ public with sharing class QuickAccountController {
         HttpResponse res = http.send(req); // NO TRY/CATCH! If it fails, let it crash!
         
         if (res.getStatusCode() == 200) {
-            // This will return "MOCK-999" from your webhook.site
             return res.getBody();
         } else {
             throw new AuraHandledException('ERP Error: ' + res.getStatus());
