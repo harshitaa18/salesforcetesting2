@@ -3,25 +3,21 @@ public with sharing class QuickAccountController {
     // --- PHASE 4 STEP 1: The Outbound Mock ---
     @AuraEnabled
     public static String fetchErpData(String accountName) {
-        // We use a Named Credential so Jataka can swap the URL without changing code
         HttpRequest req = new HttpRequest();
-        req.setEndpoint('callout:MyERP_System/tax-id'); 
+        // This will now point to your webhook.site!
+        req.setEndpoint('callout:MyERP_System'); 
         req.setMethod('POST');
         req.setBody('{"name": "' + accountName + '"}');
-        req.setTimeout(120000); // Simulate slow network for Async Wait test
+        req.setTimeout(120000); 
 
         Http http = new Http();
-        try {
-            HttpResponse res = http.send(req);
-            if (res.getStatusCode() == 200) {
-                // Return the mocked ID (e.g., "MOCK-999")
-                return res.getBody();
-            } else {
-                throw new AuraHandledException('ERP Error: ' + res.getStatus());
-            }
-        } catch (Exception e) {
-            // For demo purposes, fallback if Named Credential isn't set up yet
-            return 'MOCK-FALLBACK-ID';
+        HttpResponse res = http.send(req); // NO TRY/CATCH! If it fails, let it crash!
+        
+        if (res.getStatusCode() == 200) {
+            // This will return "MOCK-999" from your webhook.site
+            return res.getBody();
+        } else {
+            throw new AuraHandledException('ERP Error: ' + res.getStatus());
         }
     }
 
