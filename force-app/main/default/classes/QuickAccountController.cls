@@ -1,18 +1,33 @@
 public with sharing class QuickAccountController {
+    
     @AuraEnabled
     public static Account createAccount(String name, String phone) {
-        // 1. TRIGGER METRIC: SOQL Query
-        // We intentionally query the DB to check for existing accounts. 
-        // This forces the "Number of SOQL queries" metric to increment.
-        List<Account> existing = [SELECT Id, Name FROM Account WHERE Name = :name LIMIT 1];
+        System.debug('Starting Account Creation for: ' + name);
 
-        // 2. TRIGGER METRIC: DML Statement
-        // We insert a new record. This forces "Number of DML statements" to increment.
+        // 1. METRIC GENERATOR: SOQL Query
+        // Check if account exists to prevent duplicates
+        List<Account> duplicates = [SELECT Id FROM Account WHERE Name = :name LIMIT 1];
+        
+        if (!duplicates.isEmpty()) {
+            throw new AuraHandledException('Error: An Account with this name already exists.');
+        }
+
+        // 2. METRIC GENERATOR: DML Statement (1 of 2)
         Account newAcc = new Account();
         newAcc.Name = name;
         newAcc.Phone = phone;
-        
         insert newAcc;
+        System.debug('Account inserted: ' + newAcc.Id);
+
+        // 3. METRIC GENERATOR: DML Statement (2 of 2)
+        // Create a follow-up task
+        Task newTask = new Task();
+        newTask.Subject = 'Welcome Call';
+        newTask.WhatId = newAcc.Id;
+        newTask.Status = 'Not Started';
+        newTask.Priority = 'Normal';
+        insert newTask;
+        System.debug('Onboarding Task inserted');
 
         return newAcc;
     }
