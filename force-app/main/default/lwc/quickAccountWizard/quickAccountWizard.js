@@ -4,52 +4,13 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class QuickAccountWizard extends LightningElement {
     @track message = '';
-    @track selectedIndustry;
-
-    // --- INTENTIONAL SABOTAGE FOR JATAKA DEMO ---
-    connectedCallback() {
-        console.log("Simulating heavy JavaScript execution...");
-        const start = new Date().getTime();
-        // Block the main UI thread for 4.5 seconds
-        while (new Date().getTime() < start + 4500) {
-            // Do nothing, just freeze the browser rendering
-        }
-        console.log("Heavy execution finished.");
-    }
-    // --------------------------------------------
-
-    industryOptions =[
-        { label: 'Technology', value: 'Technology' },
-        { label: 'Finance', value: 'Finance' },
-        { label: 'Healthcare', value: 'Healthcare' },
-        { label: 'Retail', value: 'Retail' },
-        { label: 'Manufacturing', value: 'Manufacturing' },
-        { label: 'Education', value: 'Education' },
-        { label: 'Consulting', value: 'Consulting' },
-        { label: 'Real Estate', value: 'RealEstate' }
-    ];
-
-    handleIndustryChange(event) {
-        this.selectedIndustry = event.target.value;
-    }
-
-    handleNameChange(event) {
-        this.accountName = event.target.value;
-    }
-
-    handlePhoneChange(event) {
-        this.accountPhone = event.target.value;
-    }
-
-    @track accountName = '';
-    @track accountPhone = '';
 
     handleCreate() {
         const nameInput = this.template.querySelector('[data-id="accName"]');
         const phoneInput = this.template.querySelector('[data-id="accPhone"]');
         
-        const name = nameInput.value || this.accountName;
-        const phone = phoneInput.value || this.accountPhone;
+        const name = nameInput.value;
+        const phone = phoneInput.value;
 
         if (!name) {
             nameInput.reportValidity();
@@ -69,9 +30,6 @@ export default class QuickAccountWizard extends LightningElement {
                 // Clear inputs
                 nameInput.value = '';
                 phoneInput.value = '';
-                this.accountName = '';
-                this.accountPhone = '';
-                this.selectedIndustry = null;
             })
             .catch(error => {
                 this.message = 'Error creating account';
