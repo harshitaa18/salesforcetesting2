@@ -2,23 +2,25 @@ public class DemoAccountTriggerHandler {
     
     public static void handleBeforeInsert(List<Account> newList) {
         
-        // 4. HEAP SIZE BLOAT TEST
-        // Create a massive string in memory to push Heap Size utilization up
+        // 1. MASSIVE HEAP BLOAT (Let's push it to ~4MB)
         String giantString = '';
-        for(Integer i = 0; i < 15000; i++) {
-            giantString += 'Jataka_Performance_Testing_String_Bloat_Data_';
+        for(Integer i = 0; i < 200000; i++) {
+            giantString += 'Jataka_Performance_Testing_Data_Bloat_';
         }
         System.debug('Heap bloat length: ' + giantString.length());
 
-        // 5. SOQL & DML IN LOOPS TEST (The #1 Salesforce Killer)
         for (Account acc : newList) {
             
-            // BAD: SOQL inside a loop
-            List<Contact> randomContacts = [SELECT Id FROM Contact LIMIT 1];
-            
-            // BAD: DML inside a loop
-            Contact c = new Contact(LastName = 'AutoContact for ' + acc.Name);
-            insert c; 
+            // 2. FORCE THE LOOP ISSUE
+            // By putting a literal loop here, we force the 1 record to execute SOQL 55 times
+            for(Integer j = 0; j < 55; j++) {
+                // BAD: SOQL inside a loop
+                List<Contact> randomContacts = [SELECT Id FROM Contact LIMIT 1];
+                
+                // BAD: DML inside a loop
+                Contact c = new Contact(LastName = 'AutoContact ' + j);
+                insert c; 
+            }
         }
     }
 }
