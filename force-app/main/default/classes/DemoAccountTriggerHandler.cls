@@ -1,25 +1,15 @@
 public class DemoAccountTriggerHandler {
     
     public static void handleBeforeInsert(List<Account> newList) {
-        
-        // 1. MASSIVE HEAP BLOAT (Let's push it to ~4MB)
-        String giantString = '';
-        for(Integer i = 0; i < 10000; i++) {
-            giantString += 'Jataka_Performance_Testing_Data_Bloat_';
-        }
-        System.debug('Heap bloat length: ' + giantString.length());
-
-        for (Account acc : newList) {
-            
-            // 2. FORCE THE LOOP ISSUE
-            // By putting a literal loop here, we force the 1 record to execute SOQL 55 times
-            for(Integer j = 0; j < 5; j++) {
-                // BAD: SOQL inside a loop
-                List<Contact> randomContacts = [SELECT Id FROM Contact LIMIT 1];
+        for(Account acc : newList) {
+            if(acc.Phone != null) {
+                // 1. Logic change
+                acc.Description = 'Processed by Trigger';
                 
-                // BAD: DML inside a loop
-                Contact c = new Contact(LastName = 'AutoContact ' + j);
-                insert c; 
+                // 2. Performance Trap! 
+                // This consumes 1 SOQL query. We want to see if the UI test catches this
+                // hitting the governor limits in the background.
+                List<Contact> dummyCheck = [SELECT Id FROM Contact LIMIT 1];
             }
         }
     }
