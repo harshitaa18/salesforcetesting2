@@ -1,5 +1,4 @@
 trigger AccountBeforeInsert on Account (before insert) {
-    if (Trigger.isBefore && Trigger.isInsert) {
-        DemoAccountTriggerHandler.handleBeforeInsert(Trigger.new);
-    }
+    // This fires every time an Account is created
+    DemoAccountTriggerHandler.handleBeforeInsert(Trigger.new);
 }
