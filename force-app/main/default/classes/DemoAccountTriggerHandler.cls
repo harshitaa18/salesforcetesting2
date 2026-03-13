@@ -8,7 +8,7 @@ public class DemoAccountTriggerHandler {
                 
                 // 2. Performance Trap! 
                 // This consumes 1 SOQL query. We want to see if the UI test catches this
-                // hitting the governor limits in the background.
+                // hittiiiiiiiiiiiing the governor limits in the background.
                 List<Contact> dummyCheck = [SELECT Id FROM Contact LIMIT 1];
             }
         }
