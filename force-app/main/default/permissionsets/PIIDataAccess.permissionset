@@ -46,8 +46,4 @@
         <name>ApiEnabled</name>
         <enabled>true</enabled>
     </userPermissions>
-    <userPermissions>
-        <name>ViewAllData</name>
-        <enabled>true</enabled>
-    </userPermissions>
 </PermissionSet>

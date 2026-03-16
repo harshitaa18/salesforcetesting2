@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Profile xmlns="http://soap.sforce.com/2006/04/metadata">
     <userLicense>Salesforce</userLicense>
-    <label>Payment Processor</label>
     <description>PCI-DSS Violation: Profile with access to payment processing without proper security controls</description>
+    <label>Payment Processor</label>
     
     <!-- PCI-DSS VIOLATION: Access to payment data -->
     <fieldPermissions>
