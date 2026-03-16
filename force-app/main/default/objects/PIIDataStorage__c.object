@@ -3,6 +3,11 @@
     <label>PII Data Storage</label>
     <pluralLabel>PII Data Storages</pluralLabel>
     <deploymentStatus>Deployed</deploymentStatus>
+    <nameField>
+        <label>PII Data Storage Name</label>
+        <type>AutoNumber</type>
+        <displayFormat>PII-{0000}</displayFormat>
+    </nameField>
     <enableActivities>true</enableActivities>
     <enableFeeds>true</enableFeeds>
     <enableHistory>true</enableHistory>

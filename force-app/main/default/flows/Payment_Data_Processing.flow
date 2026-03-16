@@ -51,7 +51,7 @@
         <locationX>100</locationX>
         <locationY>100</locationY>
         <actionName>Account</actionName>
-        <actionType>createRecord</actionType>
+        <actionType>createRecords</actionType>
         <inputParameters>
             <name>name</name>
             <value>
@@ -73,7 +73,7 @@
         <locationX>150</locationX>
         <locationY>150</locationY>
         <actionName>PIIDataStorage__c</actionName>
-        <actionType>createRecord</actionType>
+        <actionType>createRecords</actionType>
         <inputParameters>
             <name>Email__c</name>
             <value>
