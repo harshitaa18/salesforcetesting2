@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>PII Data Access</label>
+    <description>Data Privacy Violation: Grants access to sensitive PII data without proper approval</description>
+    
+    <!-- GDPR VIOLATION: Granting access to PII without consent -->
+    <fieldPermissions>
+        <field>PIIDataStorage__c.Email__c</field>
+        <editable>true</editable>
+        <readable>true</readable>
+    </fieldPermissions>
+    
+    <!-- PCI-DSS VIOLATION: Granting access to payment data -->
+    <fieldPermissions>
+        <field>PIIDataStorage__c.CreditCardNumber__c</field>
+        <editable>true</editable>
+        <readable>true</readable>
+    </fieldPermissions>
+    
+    <!-- GDPR VIOLATION: Granting access to SSN -->
+    <fieldPermissions>
+        <field>PIIDataStorage__c.SocialSecurityNumber__c</field>
+        <editable>true</editable>
+        <readable>true</readable>
+    </fieldPermissions>
+    
+    <!-- Data Privacy VIOLATION: Bypassing sharing rules -->
+    <fieldPermissions>
+        <field>PIIDataStorage__c.BankAccountNumber__c</field>
+        <editable>true</editable>
+        <readable>true</readable>
+    </fieldPermissions>
+    
+    <!-- SOC2 VIOLATION: No audit trail for permission changes -->
+    <objectPermissions>
+        <object>PIIDataStorage__c</object>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    
+    <!-- Data Privacy VIOLATION: Elevated permissions without justification -->
+    <userPermissions>
+        <name>ApiEnabled</name>
+        <enabled>true</enabled>
+    </userPermissions>
+    <userPermissions>
+        <name>ViewAllData</name>
+        <enabled>true</enabled>
+    </userPermissions>
+</PermissionSet>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Payment Data Processing</label>
+    <description>PCI-DSS and GDPR Violation: Flow processes sensitive payment and PII data without encryption</description>
+    
+    <processType>AutoLaunchedFlow</processType>
+    <apiVersion>60.0</apiVersion>
+    
+    <!-- PCI-DSS VIOLATION: Processing credit card data -->
+    <variables>
+        <name>creditCardNumber</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>4111111111111111</value>
+    </variables>
+    
+    <!-- GDPR VIOLATION: Processing PII -->
+    <variables>
+        <name>customerEmail</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>customer@example.com</value>
+    </variables>
+    
+    <variables>
+        <name>socialSecurityNumber</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>123-45-6789</value>
+    </variables>
+    
+    <!-- SOC2 VIOLATION: No audit logging -->
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Process_Payment_Data</targetReference>
+        </connector>
+    </start>
+    
+    <!-- PCI-DSS VIOLATION: Unencrypted payment processing -->
+    <actionCalls>
+        <name>Process_Payment_Data</name>
+        <label>Process Payment Data</label>
+        <locationX>100</locationX>
+        <locationY>100</locationY>
+        <actionName>Account</actionName>
+        <actionType>createRecord</actionType>
+        <inputParameters>
+            <name>name</name>
+            <value>
+                <stringValue>Payment Processing Account</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>description</name>
+            <value>
+                <stringValue>PCI-DSS_VIOLATION: Credit Card={!creditCardNumber}|GDPR_VIOLATION: Email={!customerEmail}|SSN={!socialSecurityNumber}</stringValue>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    
+    <!-- Data Privacy VIOLATION: Store sensitive data -->
+    <actionCalls>
+        <name>Store_PII_Data</name>
+        <label>Store PII Data</label>
+        <locationX>150</locationX>
+        <locationY>150</locationY>
+        <actionName>PIIDataStorage__c</actionName>
+        <actionType>createRecord</actionType>
+        <inputParameters>
+            <name>Email__c</name>
+            <value>
+                <elementReference>customerEmail</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>CreditCardNumber__c</name>
+            <value>
+                <elementReference>creditCardNumber</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>SocialSecurityNumber__c</name>
+            <value>
+                <elementReference>socialSecurityNumber</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+</Flow>
