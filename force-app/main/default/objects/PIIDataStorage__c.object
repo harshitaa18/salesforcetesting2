@@ -28,7 +28,6 @@
         <type>Text</type>
         <length>16</length>
         <required>false</required>
-        <maskType>all</maskType>
     </fields>
     
     <!-- GDPR VIOLATION: Storing SSN -->
@@ -38,7 +37,6 @@
         <type>Text</type>
         <length>11</length>
         <required>false</required>
-        <maskType>all</maskType>
     </fields>
     
     <!-- Data Privacy VIOLATION: No encryption -->

@@ -13,7 +13,6 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
-        <value>4111111111111111</value>
     </variables>
     
     <!-- GDPR VIOLATION: Processing PII -->
@@ -23,7 +22,6 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
-        <value>customer@example.com</value>
     </variables>
     
     <variables>
@@ -32,7 +30,6 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
-        <value>123-45-6789</value>
     </variables>
     
     <!-- SOC2 VIOLATION: No audit logging -->
@@ -51,7 +48,6 @@
         <locationX>100</locationX>
         <locationY>100</locationY>
         <actionName>Account</actionName>
-        <actionType>createRecord</actionType>
         <inputParameters>
             <name>name</name>
             <value>
@@ -66,31 +62,4 @@
         </inputParameters>
     </actionCalls>
     
-    <!-- Data Privacy VIOLATION: Store sensitive data -->
-    <actionCalls>
-        <name>Store_PII_Data</name>
-        <label>Store PII Data</label>
-        <locationX>150</locationX>
-        <locationY>150</locationY>
-        <actionName>PIIDataStorage__c</actionName>
-        <actionType>createRecord</actionType>
-        <inputParameters>
-            <name>Email__c</name>
-            <value>
-                <elementReference>customerEmail</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>CreditCardNumber__c</name>
-            <value>
-                <elementReference>creditCardNumber</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>SocialSecurityNumber__c</name>
-            <value>
-                <elementReference>socialSecurityNumber</elementReference>
-            </value>
-        </inputParameters>
-    </actionCalls>
-</Flow>
+    </Flow>
