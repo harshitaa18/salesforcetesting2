@@ -42,7 +42,7 @@ jobs:
 
       - name: Trigger Jataka Kamikaze Pods
         run: |
-          curl -X POST "https://api.shodh.ai/integrations/github/trigger" \
+          curl -X POST "https://api.shodh.ai/api/integrations/github/trigger" \
             -H "Authorization: Bearer ${{ secrets.JATAKA_API_KEY }}" \
             -H "Content-Type: application/json" \
             -d '{
