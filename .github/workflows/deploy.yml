@@ -1,12 +1,14 @@
 name: Deploy to Salesforce & Trigger Kamikaze
 
-# Trigger on push to main branch
+# Trigger on push AND pull requests
 on:
   push:
-    branches: [ "main", "test2", "test4", "test6", "test7" , "test8", "testing","tester","neww/KAN-4","KAN-7","KAN-8","new3" ]
+    branches: [ "main", "test2", "test4", "test6", "test7", "test8", "testing", "tester", "neww/KAN-4", "KAN-7", "KAN-8", "new3" ]
     paths-ignore:
       - 'README.md'
       - '.github/**'
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   deploy-and-test:
@@ -41,13 +43,14 @@ jobs:
         run: sf project deploy start --target-org staging-org --source-dir force-app --wait 10
 
       - name: Trigger Jataka Kamikaze Pods
+        if: github.event_name == 'pull_request'
         run: |
-          curl -X POST "https://api.shodh.ai/api/integrations/github/trigger" \
+          curl -X POST "${{ secrets.JATAKA_API_URL }}/api/integrations/github/trigger" \
             -H "Authorization: Bearer ${{ secrets.JATAKA_API_KEY }}" \
             -H "Content-Type: application/json" \
             -d '{
-              "installation_id": ${{ github.event.installation.id || 0 }},
+              "installation_id": ${{ secrets.JATAKA_INSTALLATION_ID }},
               "repo_full_name": "${{ github.repository }}",
-              "branch": "${{ github.head_ref || github.ref_name }}",
-              "pr_number": ${{ github.event.pull_request.number || 0 }}
+              "branch": "${{ github.head_ref }}",
+              "pr_number": ${{ github.event.pull_request.number }}
             }'
