@@ -46,6 +46,7 @@ jobs:
             -H "Authorization: Bearer ${{ secrets.JATAKA_API_KEY }}" \
             -H "Content-Type: application/json" \
             -d '{
+              "installation_id": ${{ github.event.installation.id || 0 }},
               "repo_full_name": "${{ github.repository }}",
               "branch": "${{ github.head_ref || github.ref_name }}",
               "pr_number": ${{ github.event.pull_request.number || 0 }}
