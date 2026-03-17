@@ -3,6 +3,7 @@ public with sharing class DemoAccountTriggerHandler {
         for (Account acc : newAccounts) {
             // Logic to be executed before insert
             System.debug('Processing Account: ' + acc.Name);
+            // JATAKA IMPACT TEST
         }
     }
 }
