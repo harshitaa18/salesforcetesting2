@@ -2,4 +2,8 @@
 <ApexClass xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>60.0</apiVersion>
     <status>Active</status>
+    <!-- GDPR VIOLATION: Class processes personally identifiable information -->
+    <!-- PCI-DSS VIOLATION: Class handles credit card data -->
+    <!-- SOC2 VIOLATION: No audit logging configured -->
+    <!-- Data Privacy VIOLATION: Bypasses sharing rules -->
 </ApexClass>

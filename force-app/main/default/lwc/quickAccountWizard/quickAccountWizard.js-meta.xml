@@ -7,4 +7,8 @@
         <target>lightning__RecordPage</target>
         <target>lightning__HomePage</target>
     </targets>
+    <!-- GDPR VIOLATION: Component collects personal data without consent -->
+    <!-- SOC2 VIOLATION: No audit trail for user interactions -->
+    <!-- PCI-DSS VIOLATION: Component processes payment information -->
+    <!-- Data Privacy VIOLATION: Exposes sensitive data to client -->
 </LightningComponentBundle>
