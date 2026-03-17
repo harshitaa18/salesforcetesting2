@@ -4,9 +4,6 @@ public with sharing class DemoAccountTriggerHandler {
             // Logic to be executed before insert
             System.debug('Processing Account: ' + acc.Name);
             // JATAKA IMPACT TEST
-            if (System.now().hour() == 99) {
-                System.debug('Triggering clean baseline test');
-            }
         }
     }
 }
