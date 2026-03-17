@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>PII Data Storage</label>
+    <pluralLabel>PII Data Storages</pluralLabel>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <nameField>
+        <label>PII Data Storage Name</label>
+        <type>AutoNumber</type>
+        <displayFormat>PII-{0000}</displayFormat>
+    </nameField>
+    <enableActivities>true</enableActivities>
+    <enableFeeds>true</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    
+    <!-- GDPR VIOLATION: Storing PII data -->
+    <fields>
+        <fullName>Email__c</fullName>
+        <label>Email Address</label>
+        <type>Email</type>
+        <required>true</required>
+    </fields>
+    
+    <!-- PCI-DSS VIOLATION: Storing credit card data -->
+    <fields>
+        <fullName>CreditCardNumber__c</fullName>
+        <label>Credit Card Number</label>
+        <type>Text</type>
+        <length>16</length>
+        <required>false</required>
+    </fields>
+    
+    <!-- GDPR VIOLATION: Storing SSN -->
+    <fields>
+        <fullName>SocialSecurityNumber__c</fullName>
+        <label>Social Security Number</label>
+        <type>Text</type>
+        <length>11</length>
+        <required>false</required>
+    </fields>
+    
+    <!-- Data Privacy VIOLATION: No encryption -->
+    <fields>
+        <fullName>BankAccountNumber__c</fullName>
+        <label>Bank Account Number</label>
+        <type>Text</type>
+        <length>20</length>
+        <required>false</required>
+    </fields>
+    
+    <!-- SOC2 VIOLATION: No audit fields -->
+    <sharingModel>ReadWrite</sharingModel>
+    <enableSharing>true</enableSharing>
+</CustomObject>
