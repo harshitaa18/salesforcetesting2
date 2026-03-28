@@ -28,4 +28,14 @@ public with sharing class DemoAccountService {
         insert accounts;
         // End of method - No contacts created here on Main
     }
+    
+    @future
+    public static void doAsyncStuff(Id accountId) {
+        // Just wastes a tiny bit of CPU time in the background
+        System.debug('Running async job for Account: ' + accountId);
+        Integer x = 0;
+        for(Integer i = 0; i < 1000; i++) {
+            x++;
+        }
+    }
 }
